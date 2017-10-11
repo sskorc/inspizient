@@ -2,18 +2,17 @@
 
 namespace Modules\TheatricalPerformance\Infrastructure\Scraping\Wybrzeze;
 
+use Modules\TheatricalPerformance\Domain\NoMatchingPerformanceFoundException;
 use Modules\TheatricalPerformance\Domain\Performance;
 use Modules\TheatricalPerformance\Domain\PerformanceScrapingService;
 use Symfony\Component\DomCrawler\Crawler;
 
 class WybrzezePerformanceScrapingService extends AbstractScrapingService implements PerformanceScrapingService
 {
-    public function scrap(string $url): array
+    public function scrap(string $url, \DateTime $date): Performance
     {
         $title = 'unknown';
         $stage = 'unknown';
-
-        $performances = [];
 
         $crawler = $this->client->request('GET', $url);
 
@@ -36,15 +35,21 @@ class WybrzezePerformanceScrapingService extends AbstractScrapingService impleme
             $performanceDateString = $performanceDetailsNode->filter('span.termin_data')->first()->text();
 
             preg_match('/^([0-9]{4}-[0-9]{2}-[0-9]{2})(.*)([0-9]{2}:[0-9]{2})$/', $performanceDateString, $matches);
-            $date = $matches[1];
-            $time = $matches[3];
+            $performanceDate = $matches[1];
+            $performanceTime = $matches[3];
+
+            if (strcmp($performanceDate, $date->format('Y-m-d')) !== 0) {
+                continue;
+            }
+
+            $dateTime = new \DateTime($performanceDate . ' ' . $performanceTime);
 
             $numberOfTicketsString = $performanceDetailsNode->filter('span.termin_wolne')->first()->text();
             $numberOfTickets = (int) str_replace('Liczba wolnych miejsc: ', '', $numberOfTicketsString);
 
-            $performances[] = new Performance($title, $stage, new \DateTime($date . ' ' . $time), $numberOfTickets);
+            return new Performance($title, $stage, $dateTime, $numberOfTickets);
         }
 
-        return $performances;
+        throw new NoMatchingPerformanceFoundException();
     }
 }

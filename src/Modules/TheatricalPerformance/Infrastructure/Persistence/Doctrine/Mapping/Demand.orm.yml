@@ -11,6 +11,8 @@ Modules\TheatricalPerformance\Domain\Demand:
         url:
             type: string
             length: 100
+        date:
+            type: datetime
         email:
             type: string
             length: 100

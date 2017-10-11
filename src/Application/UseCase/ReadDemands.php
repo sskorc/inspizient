@@ -4,7 +4,9 @@ namespace Application\UseCase;
 
 use Application\UseCase\ReadDemands\Command;
 use Application\UseCase\ReadDemands\Responder;
+use Modules\TheatricalPerformance\Domain\Demand;
 use Modules\TheatricalPerformance\Domain\DemandRepository;
+use Modules\TheatricalPerformance\Domain\NoMatchingPerformanceFoundException;
 use Modules\TheatricalPerformance\Domain\PerformanceScrapingService;
 
 class ReadDemands
@@ -24,6 +26,7 @@ class ReadDemands
     public function execute(Command $command, Responder $responder)
     {
         try {
+            /** @var Demand[] $demands */
             $demands = $this->demandRepository->read();
         } catch (\Exception $e) {
             $responder->failedReadingDemands($e->__toString());
@@ -33,7 +36,11 @@ class ReadDemands
 
         $performances = [];
         foreach ($demands as $demand) {
-            $performances = array_merge($performances, $this->performanceScrapingService->scrap($demand->getUrl()));
+            try {
+                $performances[] = $this->performanceScrapingService->scrap($demand->getUrl(), $demand->getDate());
+            } catch (NoMatchingPerformanceFoundException $e) {
+                continue;
+            }
         }
 
         $responder->performancesSuccessfullyFound($performances);
