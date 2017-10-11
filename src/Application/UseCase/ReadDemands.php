@@ -43,7 +43,7 @@ class ReadDemands
         foreach ($demands as $demand) {
             try {
                 $performance = $this->performanceScrapingService->scrap($demand->getUrl(), $demand->getDate());
-                $this->performanceNotificationService->notify($performance, $demand->getEmail());
+                $this->performanceNotificationService->notify($performance, $demand->getUsername());
                 $performances[] = $performance;
             } catch (NoMatchingPerformanceFoundException $e) {
                 continue;

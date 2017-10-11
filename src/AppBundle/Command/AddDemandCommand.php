@@ -25,7 +25,7 @@ class AddDemandCommand extends ContainerAwareCommand implements AddDemand\Respon
                 InputArgument::REQUIRED
             )
             ->addArgument(
-                'email',
+                'username',
                 InputArgument::REQUIRED
             )
         ;
@@ -35,12 +35,12 @@ class AddDemandCommand extends ContainerAwareCommand implements AddDemand\Respon
     {
         $url = $input->getArgument('url');
         $date = $input->getArgument('date');
-        $email = $input->getArgument('email');
+        $username = $input->getArgument('username');
 
         $useCase = $this->getContainer()->get('use_case.add_demand');
 
         $useCase->execute(
-            new AddDemand\Command($url, new \DateTime($date), $email),
+            new AddDemand\Command($url, new \DateTime($date), $username),
             $this
         );
 

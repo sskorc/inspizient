@@ -12,14 +12,14 @@ class Demand
 
     private $date;
 
-    private $email;
+    private $username;
 
-    public function __construct(string $url, \DateTime $date, string $email)
+    public function __construct(string $url, \DateTime $date, string $username)
     {
         $this->id = Uuid::uuid4();
         $this->url = $url;
         $this->date = $date;
-        $this->email = $email;
+        $this->username = $username;
     }
 
     public function getUrl(): string
@@ -32,8 +32,8 @@ class Demand
         return $this->date;
     }
 
-    public function getEmail(): string
+    public function getUsername(): string
     {
-        return $this->email;
+        return $this->username;
     }
 }

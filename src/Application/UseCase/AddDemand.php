@@ -18,7 +18,7 @@ class AddDemand
 
     public function execute(Command $command, Responder $responder)
     {
-        $demand = new Demand($command->getUrl(), $command->getDate(), $command->getEmail());
+        $demand = new Demand($command->getUrl(), $command->getDate(), $command->getUsername());
 
         $this->demandRepository->add($demand);
 

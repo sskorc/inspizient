@@ -13,6 +13,6 @@ Modules\TheatricalPerformance\Domain\Demand:
             length: 100
         date:
             type: datetime
-        email:
+        username:
             type: string
             length: 100

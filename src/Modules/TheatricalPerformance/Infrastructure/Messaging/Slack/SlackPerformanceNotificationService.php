@@ -15,11 +15,11 @@ class SlackPerformanceNotificationService implements PerformanceNotificationServ
         $this->client = $client;
     }
 
-    public function notify(Performance $performance, string $email): void
+    public function notify(Performance $performance, string $username): void
     {
         $message = $this->client->createMessage();
 
-        $message->setText($performance->__toString());
+        $message->to('@' . $username)->setText($performance->__toString());
 
         $this->client->sendMessage($message);
     }
