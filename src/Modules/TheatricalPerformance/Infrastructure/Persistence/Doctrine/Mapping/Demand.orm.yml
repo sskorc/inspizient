@@ -16,3 +16,8 @@ Modules\TheatricalPerformance\Domain\Demand:
         username:
             type: string
             length: 100
+        requestedNumberOfTickets:
+            type: integer
+        numberOfTickets:
+            type: integer
+            nullable: true

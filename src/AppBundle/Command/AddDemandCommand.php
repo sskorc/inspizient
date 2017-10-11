@@ -25,6 +25,10 @@ class AddDemandCommand extends ContainerAwareCommand implements AddDemand\Respon
                 InputArgument::REQUIRED
             )
             ->addArgument(
+                'requestedNumberOfTickets',
+                InputArgument::REQUIRED
+            )
+            ->addArgument(
                 'username',
                 InputArgument::REQUIRED
             )
@@ -36,11 +40,12 @@ class AddDemandCommand extends ContainerAwareCommand implements AddDemand\Respon
         $url = $input->getArgument('url');
         $date = $input->getArgument('date');
         $username = $input->getArgument('username');
+        $requestedNumberOfTickets = $input->getArgument('requestedNumberOfTickets');
 
         $useCase = $this->getContainer()->get('use_case.add_demand');
 
         $useCase->execute(
-            new AddDemand\Command($url, new \DateTime($date), $username),
+            new AddDemand\Command($url, new \DateTime($date), $username, $requestedNumberOfTickets),
             $this
         );
 

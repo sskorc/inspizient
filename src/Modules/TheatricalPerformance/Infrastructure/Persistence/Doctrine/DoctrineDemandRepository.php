@@ -18,4 +18,16 @@ class DoctrineDemandRepository extends AbstractDoctrineRepository implements Dem
     {
         return $this->manager->getRepository(Demand::class)->findBy([]);
     }
+
+    public function updateNumberOfTickets(Demand $demand, int $numberOfTickets): void
+    {
+        /** @var Demand $demand */
+        $demand = $this->manager->getRepository(Demand::class)->find($demand->getId());
+
+        if ($demand->getNumberOfTickets() != $numberOfTickets) {
+            $demand->setNumberOfTickets($numberOfTickets);
+        }
+
+        $this->manager->flush();
+    }
 }

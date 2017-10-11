@@ -42,8 +42,20 @@ class ReadDemands
         $performances = [];
         foreach ($demands as $demand) {
             try {
+                $originalNumberOfTickets = $demand->getNumberOfTickets();
+                $requestedNumberOfTickets = $demand->getRequestedNumberOfTickets();
+
                 $performance = $this->performanceScrapingService->scrap($demand->getUrl(), $demand->getDate());
-                $this->performanceNotificationService->notify($performance, $demand->getUsername());
+                $numberOfTickets = $performance->getNumberOfTickets();
+
+                $this->demandRepository->updateNumberOfTickets($demand, $numberOfTickets);
+
+                if ($originalNumberOfTickets < $requestedNumberOfTickets
+                    && $numberOfTickets > $originalNumberOfTickets
+                    && $numberOfTickets >= $requestedNumberOfTickets) {
+                    $this->performanceNotificationService->notify($performance, $demand->getUsername());
+                }
+
                 $performances[] = $performance;
             } catch (NoMatchingPerformanceFoundException $e) {
                 continue;

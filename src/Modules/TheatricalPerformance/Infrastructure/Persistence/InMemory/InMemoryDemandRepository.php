@@ -23,4 +23,9 @@ class InMemoryDemandRepository implements DemandRepository
     {
         return $this->demands;
     }
+
+    public function updateNumberOfTickets(Demand $demand, int $numberOfTickets): void
+    {
+        // TODO: Implement updateNumberOfTickets() method.
+    }
 }
