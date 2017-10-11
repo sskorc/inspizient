@@ -2,6 +2,9 @@ parameters:
     #parameter_name: value
 
 services:
+  goutte.client:
+      class: Goutte\Client
+
   use_case.add_demand:
       class: Application\UseCase\AddDemand
       arguments:
@@ -11,8 +14,14 @@ services:
       class: Application\UseCase\ReadDemands
       arguments:
           - '@modules.theatrical_performance.demand.repository'
+          - '@modules.theatrical_performance.performance.scraping_service'
 
   modules.theatrical_performance.demand.repository:
       class: Modules\TheatricalPerformance\Infrastructure\Persistence\Doctrine\DoctrineDemandRepository
       arguments:
           - '@doctrine.orm.default_entity_manager'
+
+  modules.theatrical_performance.performance.scraping_service:
+      class: Modules\TheatricalPerformance\Infrastructure\Scraping\Wybrzeze\WybrzezePerformanceScrapingService
+      arguments:
+          - '@goutte.client'

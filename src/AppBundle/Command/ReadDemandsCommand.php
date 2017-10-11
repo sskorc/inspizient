@@ -4,6 +4,7 @@ namespace AppBundle\Command;
 
 use Application\UseCase\ReadDemands;
 use Modules\TheatricalPerformance\Domain\Demand;
+use Modules\TheatricalPerformance\Domain\Performance;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -33,13 +34,13 @@ class ReadDemandsCommand extends ContainerAwareCommand implements ReadDemands\Re
         $output->writeln($this->response);
     }
 
-    public function demandsSuccessfullyRead(array $demands)
+    public function performancesSuccessfullyFound(array $performances)
     {
-        $response = sprintf("%s demands found:\n", count($demands));
+        $response = sprintf("%s performances found:\n", count($performances));
 
-        /** @var Demand $demand */
-        foreach ($demands as $demand) {
-            $response .= sprintf("%s %s\n", $demand->getUrl(), $demand->getEmail());
+        /** @var Performance $performance */
+        foreach ($performances as $performance) {
+            $response .= sprintf("%s\n", $performance);
         }
 
         $this->response = $response;
