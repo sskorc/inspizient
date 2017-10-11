@@ -74,3 +74,15 @@ swiftmailer:
     username: '%mailer_user%'
     password: '%mailer_password%'
     spool: { type: memory }
+
+nexy_slack:
+    guzzle_service:       null
+    endpoint:             '%slack_endpoint%'
+    channel:              null
+    username:             Inspizient
+    icon:                 :performing_arts:
+    link_names:           false
+    unfurl_links:         false
+    unfurl_media:         true
+    allow_markdown:       true
+    markdown_in_attachments: []

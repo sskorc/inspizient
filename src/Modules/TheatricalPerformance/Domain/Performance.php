@@ -35,6 +35,11 @@ class Performance
         return $this->date;
     }
 
+    public function getDateAsString(): string
+    {
+        return $this->getDate()->format('d.m.Y H:i');
+    }
+
     public function getNumberOfTickets(): int
     {
         return $this->numberOfTickets;
@@ -46,7 +51,7 @@ class Performance
             "Title: %s\tStage: %s\tDate: %s\tNoOfTickets: %s",
             $this->getTitle(),
             $this->getStage(),
-            $this->getDate()->format('d.m.Y H:i'),
+            $this->getDateAsString(),
             $this->getNumberOfTickets()
         );
     }

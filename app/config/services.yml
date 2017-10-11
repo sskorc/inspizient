@@ -15,6 +15,7 @@ services:
       arguments:
           - '@modules.theatrical_performance.demand.repository'
           - '@modules.theatrical_performance.performance.scraping_service'
+          - '@modules.theatrical_performance.performance.notification_service'
 
   modules.theatrical_performance.demand.repository:
       class: Modules\TheatricalPerformance\Infrastructure\Persistence\Doctrine\DoctrineDemandRepository
@@ -25,3 +26,14 @@ services:
       class: Modules\TheatricalPerformance\Infrastructure\Scraping\Wybrzeze\WybrzezePerformanceScrapingService
       arguments:
           - '@goutte.client'
+
+  modules.theatrical_performance.performance.notification_service:
+      class: Modules\TheatricalPerformance\Infrastructure\Messaging\Slack\SlackPerformanceNotificationService
+      arguments:
+          - '@nexy_slack.client'
+
+#  modules.theatrical_performance.performance.notification_service:
+#      class: Modules\TheatricalPerformance\Infrastructure\Messaging\Email\EmailPerformanceNotificationService
+#      arguments:
+#          - '@mailer'
+#          - '@templating'

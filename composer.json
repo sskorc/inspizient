@@ -17,6 +17,7 @@
         "doctrine/orm": "^2.5",
         "fabpot/goutte": "^3.2",
         "incenteev/composer-parameter-handler": "^2.0",
+        "nexylan/slack-bundle": "^1.1",
         "ramsey/uuid": "^2.9",
         "sensio/distribution-bundle": "^5.0.19",
         "sensio/framework-extra-bundle": "^3.0.2",
@@ -48,7 +49,7 @@
     },
     "config": {
         "platform": {
-            "php": "5.5.9"
+            "php": "7.1.0"
         },
         "sort-packages": true
     },

@@ -7,6 +7,7 @@ use Application\UseCase\ReadDemands\Responder;
 use Modules\TheatricalPerformance\Domain\Demand;
 use Modules\TheatricalPerformance\Domain\DemandRepository;
 use Modules\TheatricalPerformance\Domain\NoMatchingPerformanceFoundException;
+use Modules\TheatricalPerformance\Domain\PerformanceNotificationService;
 use Modules\TheatricalPerformance\Domain\PerformanceScrapingService;
 
 class ReadDemands
@@ -15,12 +16,16 @@ class ReadDemands
 
     private $performanceScrapingService;
 
+    private $performanceNotificationService;
+
     public function __construct(
         DemandRepository $demandRepository,
-        PerformanceScrapingService $performanceScrapingService
+        PerformanceScrapingService $performanceScrapingService,
+        PerformanceNotificationService $performanceNotificationService
     ) {
         $this->demandRepository = $demandRepository;
         $this->performanceScrapingService = $performanceScrapingService;
+        $this->performanceNotificationService = $performanceNotificationService;
     }
 
     public function execute(Command $command, Responder $responder)
@@ -37,7 +42,9 @@ class ReadDemands
         $performances = [];
         foreach ($demands as $demand) {
             try {
-                $performances[] = $this->performanceScrapingService->scrap($demand->getUrl(), $demand->getDate());
+                $performance = $this->performanceScrapingService->scrap($demand->getUrl(), $demand->getDate());
+                $this->performanceNotificationService->notify($performance, $demand->getEmail());
+                $performances[] = $performance;
             } catch (NoMatchingPerformanceFoundException $e) {
                 continue;
             }
