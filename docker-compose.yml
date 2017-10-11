@@ -5,3 +5,12 @@ php:
   environment:
     XDEBUG_CONFIG: remote_host=192.168.99.1
     PHP_IDE_CONFIG: serverName=inspizient
+  links:
+      - mysql
+mysql:
+  image: mysql/mysql-server:5.7
+  environment:
+    - MYSQL_RANDOM_ROOT_PASSWORD=yes
+    - MYSQL_DATABASE=inspizient
+    - MYSQL_USER=inspizient
+    - MYSQL_PASSWORD=inspizient

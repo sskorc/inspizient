@@ -56,9 +56,16 @@ doctrine:
         #path: '%database_path%'
 
     orm:
-        auto_generate_proxy_classes: '%kernel.debug%'
-        naming_strategy: doctrine.orm.naming_strategy.underscore
-        auto_mapping: true
+        auto_generate_proxy_classes: "%kernel.debug%"
+        entity_managers:
+            default:
+                auto_mapping: true
+                mappings:
+                    theatrical_performance:
+                        type: yml
+                        dir: %kernel.root_dir%/../src/Modules/TheatricalPerformance/Infrastructure/Persistence/Doctrine/Mapping
+                        prefix: Modules\TheatricalPerformance\Domain
+                        is_bundle: false
 
 # Swiftmailer Configuration
 swiftmailer:

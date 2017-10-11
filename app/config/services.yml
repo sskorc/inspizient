@@ -9,4 +9,6 @@ services:
           - '@modules.theatrical_performance.demand.repository'
 
   modules.theatrical_performance.demand.repository:
-      class: Modules\TheatricalPerformance\Infrastructure\Persistence\InMemory\InMemoryDemandRepository
+      class: Modules\TheatricalPerformance\Infrastructure\Persistence\Doctrine\DoctrineDemandRepository
+      arguments:
+          - '@doctrine.orm.default_entity_manager'
