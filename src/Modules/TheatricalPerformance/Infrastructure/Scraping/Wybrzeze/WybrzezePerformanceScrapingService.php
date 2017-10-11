@@ -34,10 +34,15 @@ class WybrzezePerformanceScrapingService extends AbstractScrapingService impleme
         foreach ($performanceDetailsNodes as $performanceDetailsNode) {
             $performanceDetailsNode = new Crawler($performanceDetailsNode);
             $performanceDateString = $performanceDetailsNode->filter('span.termin_data')->first()->text();
+
+            preg_match('/^([0-9]{4}-[0-9]{2}-[0-9]{2})(.*)([0-9]{2}:[0-9]{2})$/', $performanceDateString, $matches);
+            $date = $matches[1];
+            $time = $matches[3];
+
             $numberOfTicketsString = $performanceDetailsNode->filter('span.termin_wolne')->first()->text();
             $numberOfTickets = (int) str_replace('Liczba wolnych miejsc: ', '', $numberOfTicketsString);
 
-            $performances[] = new Performance($title, $stage, $performanceDateString, $numberOfTickets);
+            $performances[] = new Performance($title, $stage, new \DateTime($date . ' ' . $time), $numberOfTickets);
         }
 
         return $performances;

@@ -12,7 +12,7 @@ class Performance
 
     private $numberOfTickets;
 
-    public function __construct(string $title, string $stage, string $date, int $numberOfTickets)
+    public function __construct(string $title, string $stage, \DateTime $date, int $numberOfTickets)
     {
         $this->title = $title;
         $this->stage = $stage;
@@ -30,7 +30,7 @@ class Performance
         return $this->stage;
     }
 
-    public function getDate(): string
+    public function getDate(): \DateTime
     {
         return $this->date;
     }
@@ -46,7 +46,7 @@ class Performance
             "Title: %s\tStage: %s\tDate: %s\tNoOfTickets: %s",
             $this->getTitle(),
             $this->getStage(),
-            $this->getDate(),
+            $this->getDate()->format('d.m.Y H:i'),
             $this->getNumberOfTickets()
         );
     }
