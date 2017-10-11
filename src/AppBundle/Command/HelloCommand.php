@@ -2,8 +2,6 @@
 
 namespace AppBundle\Command;
 
-use Application\UseCase\CheckForNewClassified;
-use Domain\Classified\Classified;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
