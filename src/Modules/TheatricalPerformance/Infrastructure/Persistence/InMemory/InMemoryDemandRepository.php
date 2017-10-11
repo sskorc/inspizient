@@ -18,4 +18,9 @@ class InMemoryDemandRepository implements DemandRepository
     {
         $this->demands[] = $demand;
     }
+
+    public function read(): array
+    {
+        return $this->demands;
+    }
 }

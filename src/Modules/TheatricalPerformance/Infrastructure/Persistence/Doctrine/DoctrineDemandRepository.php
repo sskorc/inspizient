@@ -13,4 +13,9 @@ class DoctrineDemandRepository extends AbstractDoctrineRepository implements Dem
 
         $this->manager->flush();
     }
+
+    public function read(): array
+    {
+        return $this->manager->getRepository(Demand::class)->findBy([]);
+    }
 }

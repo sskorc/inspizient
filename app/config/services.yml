@@ -2,9 +2,13 @@ parameters:
     #parameter_name: value
 
 services:
-
   use_case.add_demand:
       class: Application\UseCase\AddDemand
+      arguments:
+          - '@modules.theatrical_performance.demand.repository'
+
+  use_case.read_demands:
+      class: Application\UseCase\ReadDemands
       arguments:
           - '@modules.theatrical_performance.demand.repository'
 
